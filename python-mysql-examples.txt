@@ -1,0 +1,108 @@
+
+Structure of python program to interact with MySQL
+
+import  MySQLdb
+
+1. Connect with database          [ connect() ]
+2. Get cursor to the database    [ cursor() ]
+       Steps 3 & 4 are repeatedly used as per the necessity
+       3. Execute SQL command   [ execute() ]
+       4. Process results                [ fetchone() / fetchall() ]
+5. Close connection                    [ close() ]
+
+
+
+
+
+
+----------------------------------------------------------------------------
+
+Create table [ tablename: bookinfo,   database name: pydemo ]
+
+
+
+import   MySQLdb, sys
+
+db = MySQLdb.connect("localhost","root","","pydemo" )
+
+cursor = db.cursor()
+ 
+sqlcmd = "CREATE TABLE bookinfo (title  CHAR(20) NOT NULL, \
+         author  CHAR(20),  price  INT, isbn INT ) "
+cursor.execute(sqlcmd)
+
+db.close()
+
+
+
+----------------------------------------------------------------------------
+
+Display table structure   [ tablename: bookinfo,   database name: pydemo ]
+
+
+
+import MySQLdb
+
+db = MySQLdb.connect("localhost","root","","pydemo" )
+cursor = db.cursor()
+cursor.execute("show columns from bookinfo" )
+
+data = cursor.fetchone()    
+print(data)
+data = cursor.fetchone()
+print(data)
+data = cursor.fetchone()
+print(data)
+data = cursor.fetchone()
+print(data)
+
+db.close()
+
+
+----------------------------------------------------------------------------
+
+Add records to table [ tablename: bookinfo,   database name: pydemo ]
+
+
+
+import MySQLdb
+
+db = MySQLdb.connect("localhost","root","","pydemo" )
+cursor = db.cursor()
+sql = "INSERT INTO bookinfo  (title, author, price, isbn) \
+      VALUES ('Python Crash Course', 'Eric Matthes', '25', '1593276036');"
+cursor.execute(sql)
+sql = "INSERT INTO bookinfo  (title, author, price, isbn) \
+      VALUES ('Introduction to Python', 'Smith', '32', '1100023456');"
+cursor.execute(sql)
+sql = "INSERT INTO bookinfo  (title, author, price, isbn) \
+      VALUES ('Using MySQL', 'John', '37', '3141027463');"
+cursor.execute(sql)
+
+db.close()
+
+----------------------------------------------------------------------------
+
+Fetch multiple records	[ tablename: bookinfo,   database name: pydemo ]
+
+import MySQLdb
+
+db = MySQLdb.connect("localhost","root","","pydemo" )
+cursor = db.cursor()
+sql = "select * from bookinfo;"
+cursor.execute(sql)
+query_results = cursor.fetchall()
+for row in query_results:
+   print (row)
+
+db.close()
+
+
+
+
+----------------------------------------------------------------------------
+
+
+
+
+----------------------------------------------------------------------------
